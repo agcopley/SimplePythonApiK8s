@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ name: flask
+spec:
+ strategy:
+   rollingUpdate:
+     maxSurge: 1
+     maxUnavailable: 1
+   type: RollingUpdate
+ replicas: 1
+ selector:
+   matchLabels:
+     app: flask
+ template:
+   metadata:
+     labels:
+       app: flask
+   spec:
+     containers:
+       - name: flask
+         image: gcr.io/tutorial-ms-gcp/github.com/agcopley/simplepythonapi:c4864b878b5b50ce5987768e3ca9a880ca2b79b9
+         resources:
+           limits:
+             cpu: "1"
+             memory: "4Gi"
+           requests:
+             cpu: "1"
+             memory: "4Gi"
+         ports:
+           - containerPort: 5000
+         envFrom:
+         - configMapRef:
+             name: flask-conf

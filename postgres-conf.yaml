@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-conf
+  namespace: default
+data:
+  POSTGRES_PASSWORD: mtt
+  POSTGRES_USER: mtt
+  POSTGRES_DB: mtt_blog
+  PGDATA: /var/lib/postgresql/data/pgdata
