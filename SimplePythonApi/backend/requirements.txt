@@ -1,0 +1,7 @@
+flask
+flask-restful
+psycopg2
+Flask-SQLAlchemy
+flask-marshmallow==0.14.0
+requests>=2.20.0
+psutil
