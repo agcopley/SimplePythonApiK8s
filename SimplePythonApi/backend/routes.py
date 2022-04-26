@@ -1,6 +1,8 @@
 import models
+from flask import request
 from flask import current_app as app
 from flask_restful import Resource, reqparse
+from contextlib import contextmanager
 
 
 def initialize_routes(api):
@@ -8,10 +10,10 @@ def initialize_routes(api):
   
     api.add_resource(DocumentsApi, '/blog/documents')
     
-    api.add_resource(GetDocumentsApi, '/blog/documents/<integer:recordId>')
+    api.add_resource(GetDocumentsApi, '/blog/documents/<int:recordId>')
                      
     """DELETE"""
-    api.add_resource(DeleteDocumentsApi, '/blog/documents/<integer:relativePath>')  
+    #api.add_resource(DeleteDocumentsApi, '/blog/documents/<int:relativePath>')  
     
     
     
@@ -20,6 +22,8 @@ def session_scope():
     session = models.db.session()
     try:
         yield session
+        session.flush()
+        session.expunge_all()        
         session.commit()
     except:
         session.rollback()
@@ -47,6 +51,7 @@ class DocumentsApi(Resource):
         try:
             with session_scope() as session:
                 new_document=models.Document(name,type,source,blog,active)
+                session.add(new_document)
         except Exception as ex:
             return {"message": "An error occurred updating the item.{}".format(str(ex))}, 500
              
@@ -65,7 +70,3 @@ class GetDocumentsApi(Resource):
             return {"message": "An error occurred updating the item.{}".format(str(ex))}, 500
         
         return models.document_schema.dump(new_document)
-    
-    
-    
-

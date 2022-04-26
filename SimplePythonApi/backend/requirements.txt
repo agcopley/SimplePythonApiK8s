@@ -3,5 +3,6 @@ flask-restful
 psycopg2
 Flask-SQLAlchemy
 flask-marshmallow==0.14.0
+marshmallow-sqlalchemy
 requests>=2.20.0
 psutil
