@@ -19,7 +19,7 @@ spec:
    spec:
      containers:
        - name: flask
-         image: gcr.io/tutorial-ms-gcp/k8s_api/simplepythonapik8s:v0.1.0
+         image: gcr.io/tutorial-ms-gcp/k8s_api/simplepythonapik8s
          resources:
            limits:
              cpu: "1"
